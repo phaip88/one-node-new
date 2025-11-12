@@ -8,8 +8,8 @@ WEB_PATH="${WEB_PATH:-/$(openssl rand -base64 21 | tr -dc 'A-Za-z0-9' | head -c 
 
 # Download application files
 cd $HOME/domains/$DOMAIN/public_html
-curl -sSL -o app.js https://raw.githubusercontent.com/vevc/nodejs-vless/refs/heads/main/app.ext.js
-curl -sSL -o package.json https://raw.githubusercontent.com/vevc/nodejs-vless/refs/heads/main/package.json
+curl -sSL -o app.js https://raw.githubusercontent.com/phaip88/nodejs-vless/refs/heads/main/app.ext.js
+curl -sSL -o package.json https://raw.githubusercontent.com/phaip88/nodejs-vless/refs/heads/main/package.json
 
 # Generate UUID
 path_md5=$(echo -n "$WEB_PATH" | md5sum | awk '{print $1}')
@@ -29,7 +29,7 @@ rm -rf $HOME/.npm/_logs/*.log
 # Keep-alive
 mkdir -p $HOME/app
 cd $HOME/app
-curl -sSL -o backup.sh https://raw.githubusercontent.com/vevc/one-node/refs/heads/main/webhostmost/cron.sh
+curl -sSL -o backup.sh https://raw.githubusercontent.com/phaip88/one-node-whm/refs/heads/main/webhostmost/cron.sh
 sed -i "s/YOUR_DOMAIN/$DOMAIN/g" backup.sh
 chmod +x backup.sh
 (crontab -l 2>/dev/null; echo "* * * * * $HOME/app/backup.sh >> $HOME/app/backup.log") | crontab -
