@@ -1,7 +1,7 @@
 ## Usage
 
 ```bash
-curl -s https://raw.githubusercontent.com/vevc/one-node/refs/heads/main/webhostmost/install.sh |
+curl -s https://github.com/phaip88/one-node-new/blob/main/webhostmost/install.sh |
 env DOMAIN=example.com REMARKS=webhostmost-server3 bash
 ```
 
