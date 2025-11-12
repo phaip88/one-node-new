@@ -1,0 +1,10 @@
+{
+  "name": "nodejs-vless-est",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.2"
+  }
+}
