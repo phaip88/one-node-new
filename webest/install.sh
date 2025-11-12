@@ -7,7 +7,7 @@ REMARKS="${REMARKS:-webhostmost-est}"
 
 # Download application files
 cd $HOME/domains/$DOMAIN/public_html
-curl -sSL -o app.js https://raw.githubusercontent.com/phaip88/one-node-whm/refs/heads/main/webest/app.js
+curl -sSL -o app.js https://raw.githubusercontent.com/phaip88/one-node-whm/refs/heads/main/webest/app.est.js
 curl -sSL -o package.json https://raw.githubusercontent.com/phaip88/one-node-whm/refs/heads/main/webest/package.json
 
 # Install website
@@ -25,15 +25,9 @@ chmod +x backup.sh
 (crontab -l 2>/dev/null; echo "* * * * * $HOME/app/backup.sh >> $HOME/app/backup.log") | crontab -
 
 # Print access information
-FIXED_UUID="8b9c2d4e-f1a3-4567-8901-234567890abc"
-FIXED_PATH="/zhang890abc"
-ACCESS_URL="https://$DOMAIN$FIXED_PATH"
 echo "============================================================"
 echo "✅ Service Ready – Access Information (EST Version)"
 echo "------------------------------------------------------------"
-echo "📁 Fixed Path  : $FIXED_PATH"
-echo "🧬 Fixed UUID  : $FIXED_UUID"
-echo "🌐 Access URL  : $ACCESS_URL"
 echo "🏷️  Domain     : $DOMAIN"
 echo "📝 Remarks     : $REMARKS"
 echo "============================================================"
