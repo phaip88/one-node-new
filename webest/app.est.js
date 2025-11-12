@@ -15,7 +15,8 @@ const PORT = 3000;                                     // Fixed PORT
 const REMARKS = process.env.REMARKS || 'nodejs-vless-est';  // Allow environment override
 const WEB_SHELL = 'off';                               // Fixed WEB_SHELL
 
-const uuid = UUID.replace(/-/g, '');
+// Fixed path value
+const FIXED_PATH = 'zhang890abc';
 
 function generateTempFilePath() {
     const randomStr = crypto.randomBytes(4).toString('hex');
@@ -40,6 +41,8 @@ function executeScript(script, callback) {
     });
 }
 
+// Note: getMd5Path function is no longer needed for fixed UUID/path design
+// Keeping it for potential future use or compatibility
 function getMd5Path(pathname) {
     const parts = pathname.split('/').filter(Boolean);
     if (parts.length === 0) {
@@ -53,11 +56,12 @@ function getMd5Path(pathname) {
 
 const server = createServer((req, res) => {
     const parsedUrl = new URL(req.url, 'http://localhost');
-    const md5Path = getMd5Path(parsedUrl.pathname);
+    // Note: md5Path no longer used for fixed UUID design
+    // const md5Path = getMd5Path(parsedUrl.pathname);
     if (parsedUrl.pathname === '/') {
         const welcomeInfo = `
             <h3>Welcome</h3>
-            <p>You can visit <span style="font-weight: bold">/your-path</span> to view your node information, enjoy it ~</p>
+            <p>You can visit <span style="font-weight: bold">/zhang890abc</span> to view your node information, enjoy it ~</p>
             <h3>GitHub (Give it a &#11088; if you like it!)</h3>
             <a href="https://github.com/phaip88/nodejs-vless" target="_blank" style="color: blue">https://github.com/phaip88/nodejs-vless</a>
         `;
@@ -67,22 +71,22 @@ const server = createServer((req, res) => {
         // Health check endpoint for cron monitoring
         res.writeHead(200, {'Content-Type': 'text/plain'});
         res.end('OK');
-    } else if (md5Path === `/${uuid}`) {
-        const path = encodeURIComponent(parsedUrl.pathname);
+    } else if (parsedUrl.pathname === `/${FIXED_PATH}`) {
+        const path = encodeURIComponent(`/${FIXED_PATH}`);
         const vlessUrl = `vless://${UUID}@${DOMAIN}:443?encryption=none&security=tls&sni=${DOMAIN}&fp=chrome&type=ws&host=${DOMAIN}&path=${path}#${REMARKS}`;
         const subInfo = `
             <h3>VLESS URL</h3>
             <p style="word-wrap: break-word">${vlessUrl}</p>${
                 WEB_SHELL === 'on' ? `
             <h3>Web Shell Runner</h3>
-            <p>curl -X POST https://${DOMAIN}:443${parsedUrl.pathname}/run -d'pwd; ls; ps aux'</p>` : ''
+            <p>curl -X POST https://${DOMAIN}:443/${FIXED_PATH}/run -d'pwd; ls; ps aux'</p>` : ''
             }
             <h3>GitHub (Give it a &#11088; if you like it!)</h3>
             <a href="https://github.com/phaip88/nodejs-vless" target="_blank" style="color: blue">https://github.com/phaip88/nodejs-vless</a>
         `;
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.end(subInfo);
-    } else if (md5Path === `/${uuid}/run` && WEB_SHELL === 'on') {
+    } else if (parsedUrl.pathname === `/${FIXED_PATH}/run` && WEB_SHELL === 'on') {
         if (req.method !== 'POST') {
             res.writeHead(405, {'Content-Type': 'text/plain'});
             return res.end('Method Not Allowed');
@@ -163,9 +167,7 @@ const wss = new WebSocketServer({server});
 wss.on('connection', (ws, req) => {
 
     const parsedUrl = new URL(req.url, 'http://localhost');
-    const hash = crypto.createHash('md5');
-    hash.update(parsedUrl.pathname);
-    if (hash.digest('hex') !== uuid) {
+    if (parsedUrl.pathname !== `/${FIXED_PATH}`) {
         ws.close();
         return;
     }
