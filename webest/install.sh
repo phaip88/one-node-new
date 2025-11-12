@@ -26,7 +26,7 @@ chmod +x backup.sh
 
 # Print access information
 FIXED_UUID="8b9c2d4e-f1a3-4567-8901-234567890abc"
-FIXED_PATH="/8b9c2d4ef1a345678901234567890abc"
+FIXED_PATH="/zhang890abc"
 ACCESS_URL="https://$DOMAIN$FIXED_PATH"
 echo "============================================================"
 echo "✅ Service Ready – Access Information (EST Version)"
