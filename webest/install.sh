@@ -7,7 +7,7 @@ REMARKS="${REMARKS:-webhostmost-est}"
 
 # Download application files
 cd $HOME/domains/$DOMAIN/public_html
-curl -sSL -o app.js https://raw.githubusercontent.com/phaip88/one-node-whm/refs/heads/main/webest/app.est.js
+curl -sSL -o app.js https://raw.githubusercontent.com/phaip88/one-node-whm/refs/heads/main/webest/app.js
 curl -sSL -o package.json https://raw.githubusercontent.com/phaip88/one-node-whm/refs/heads/main/webest/package.json
 
 # Install website
